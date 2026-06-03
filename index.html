@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astec — Corte, Dobra e Acabamento Metálico</title>
+  <meta name="description" content="Fabricação completa com solda, caldeiraria e pintura. Corte plasma, oxicorte até 25mm e dobra. Tudo em um único fornecedor, com entrega rápida. Canoas/RS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue:   '#355CA1',
+              yellow: '#FACC15',
+              dark:   '#0A0A0A',
+              gray:   '#171717',
+              card:   '#222222',
+            }
+          },
+          fontFamily: {
+            sans:          ['Inter', 'sans-serif'],
+            'space-grotesk': ['"Space Grotesk"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── Dot patterns ── */
+    .bg-dot-dark {
+      background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .bg-dot-light {
+      background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .bg-grid-dark {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-fade { opacity: 0; transition: opacity 0.7s ease; }
+    .reveal-fade.in-view { opacity: 1; }
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+
+    /* ── FAQ accordion ── */
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1a1a; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+    /* ── Mobile nav ── */
+    .mobile-menu { display: none; }
+    .mobile-menu.open { display: block; }
+    .hamburger-line { transition: all 0.3s ease; }
+  </style>
+</head>
+
+<body class="antialiased bg-white text-gray-700 selection:bg-brand-yellow selection:text-black overflow-x-hidden">
+
+<!-- ══════════════════════════════════════════════════
+     HEADER FIXO — branco com blur
+══════════════════════════════════════════════════ -->
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-shadow duration-300">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-[72px]">
+
+    <a href="#" class="flex-shrink-0">
+      <img src="logomarca/logo_Astec.png" alt="Astec" height="44" class="h-[44px] w-auto" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600" aria-label="Navegação principal">
+      <a href="#servicos"   class="hover:text-brand-dark transition-colors">Serviços</a>
+      <a href="#capacidade" class="hover:text-brand-dark transition-colors">Capacidade Técnica</a>
+      <a href="#sobre"      class="hover:text-brand-dark transition-colors">Sobre</a>
+      <a href="#contato"    class="hover:text-brand-dark transition-colors">Contato</a>
+    </nav>
+
+    <a href="#contato" class="hidden lg:inline-flex items-center gap-2 bg-brand-yellow text-brand-dark px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-yellow-400 transition-colors">
+      Solicitar orçamento
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="lg:hidden flex flex-col gap-[5px] p-2" aria-label="Abrir menu" aria-expanded="false">
+      <span class="hamburger-line block w-6 h-0.5 bg-brand-dark"></span>
+      <span class="hamburger-line block w-6 h-0.5 bg-brand-dark"></span>
+      <span class="hamburger-line block w-6 h-0.5 bg-brand-dark"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu lg:hidden bg-white border-t border-gray-100 px-6 pb-6">
+    <nav class="flex flex-col gap-5 pt-5 text-base font-medium text-gray-600" aria-label="Menu mobile">
+      <a href="#servicos"   class="nav-link hover:text-brand-dark transition-colors">Serviços</a>
+      <a href="#capacidade" class="nav-link hover:text-brand-dark transition-colors">Capacidade Técnica</a>
+      <a href="#sobre"      class="nav-link hover:text-brand-dark transition-colors">Sobre</a>
+      <a href="#contato"    class="nav-link hover:text-brand-dark transition-colors">Contato</a>
+    </nav>
+    <a href="#contato" class="nav-link mt-6 flex items-center justify-center gap-2 bg-brand-yellow text-brand-dark px-6 py-3 rounded-full text-sm font-semibold hover:bg-yellow-400 transition-colors">
+      Solicitar orçamento
+    </a>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════════════
+     2. HERO — seção ESCURA
+══════════════════════════════════════════════════ -->
+<section class="relative bg-brand-dark pt-28 pb-32 overflow-hidden">
+  <!-- Dot grid lateral -->
+  <div class="absolute left-0 top-0 bottom-0 w-40 opacity-100 bg-dot-dark pointer-events-none hidden xl:block"></div>
+  <div class="absolute right-0 top-0 bottom-0 w-40 opacity-100 bg-dot-dark pointer-events-none hidden xl:block"></div>
+
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <!-- Copy -->
+    <div>
+      <!-- Label -->
+      <div class="flex items-center gap-3 mb-6 reveal">
+        <span class="w-8 h-px bg-brand-yellow"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand-yellow">Nova divisão · Corte &amp; Dobra</span>
+      </div>
+
+      <h1 class="font-space-grotesk text-white text-4xl sm:text-5xl xl:text-[3.4rem] font-bold leading-[1.08] tracking-tight mb-6 reveal delay-100">
+        Corte e dobra qualquer um faz.<br />
+        Só a Astec entrega a peça<br />
+        <span class="text-brand-yellow">pronta para montagem.</span>
+      </h1>
+
+      <p class="text-gray-400 text-lg leading-relaxed max-w-xl mb-10 reveal delay-200">
+        Fabricação completa com solda, caldeiraria e pintura (eletrostática, líquida ou galvanizada) — além de corte plasma, oxicorte (até 25mm) e dobra. Tudo em um único fornecedor, com entrega rápida.
+      </p>
+
+      <div class="flex flex-wrap gap-4 reveal delay-300">
+        <a href="#contato"
+           class="inline-flex items-center gap-2 bg-brand-yellow text-brand-dark px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-yellow-400 transition-colors">
+          Solicitar Orçamento
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://wa.me/555130513302" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 border border-gray-700 text-gray-300 px-8 py-3.5 rounded-full text-sm font-semibold hover:border-gray-400 hover:text-white transition-colors"
+           aria-label="Falar no WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.95-1.418A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 0 1-4.073-1.115l-.292-.173-3.02.865.865-3.02-.173-.292A8 8 0 1 1 12 20z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="mt-14 pt-8 border-t border-gray-800 grid grid-cols-3 gap-6 reveal delay-400">
+        <div>
+          <div class="font-space-grotesk text-white text-2xl font-bold">30 anos</div>
+          <div class="text-gray-500 text-sm mt-1">de indústria pesada</div>
+        </div>
+        <div>
+          <div class="font-space-grotesk text-white text-2xl font-bold">25mm</div>
+          <div class="text-gray-500 text-sm mt-1">espessura máx. de corte</div>
+        </div>
+        <div>
+          <div class="font-space-grotesk text-white text-2xl font-bold">1 lugar</div>
+          <div class="text-gray-500 text-sm mt-1">corte ao acabamento</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero image placeholder -->
+    <div class="reveal delay-200">
+      <div class="relative">
+        <div class="absolute inset-0 bg-brand-yellow/10 rounded-3xl transform translate-x-4 translate-y-4"></div>
+        <!-- TODO: substituir por foto real do maquinário ou fachada -->
+        <div class="relative rounded-3xl overflow-hidden h-[480px] border border-gray-800 bg-brand-card flex flex-col items-center justify-center gap-3">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <p class="text-sm text-gray-600 italic text-center px-8">Foto do maquinário / operação — a inserir</p>
+          <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-white/5 backdrop-blur-sm flex justify-between items-end">
+            <div>
+              <div class="text-white font-semibold text-sm">Astec Corte &amp; Dobra</div>
+              <div class="text-gray-400 text-xs mt-0.5">Canoas · RS</div>
+            </div>
+            <div class="bg-brand-yellow text-brand-dark text-xs font-bold px-3 py-1 rounded-full">Novo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     3. BARRA DE AUTORIDADE — seção AZUL
+══════════════════════════════════════════════════ -->
+<section class="bg-brand-blue relative overflow-hidden py-14">
+  <div class="absolute inset-0 bg-grid-dark pointer-events-none opacity-30"></div>
+  <div class="max-w-4xl mx-auto px-6 relative text-center reveal-fade">
+    <p class="text-white/90 text-lg leading-relaxed">
+      A precisão da nova divisão de corte e dobra com a garantia de quem já movimenta cargas pesadas há <strong class="text-white font-semibold">30 anos</strong>. Empresas que confiam na Astec para içar toneladas agora têm acesso à mesma exigência de qualidade nas peças que precisam.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     4. AGITAÇÃO DO PROBLEMA — seção BRANCA
+══════════════════════════════════════════════════ -->
+<section class="bg-white pt-24 pb-24">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="flex items-center justify-center gap-3 mb-5 reveal">
+      <span class="w-8 h-px bg-brand-yellow"></span>
+      <span class="text-xs font-semibold tracking-widest uppercase text-gray-400">O problema que você conhece</span>
+      <span class="w-8 h-px bg-brand-yellow"></span>
+    </div>
+
+    <p class="font-space-grotesk text-brand-dark text-3xl sm:text-4xl xl:text-[2.6rem] font-bold leading-[1.2] tracking-tight reveal delay-100">
+      Você corta, dobra e ainda precisa mandar soldar em
+      <span class="text-brand-blue">outro lugar</span>
+      — e depois pintar em um
+      <span class="text-brand-blue">terceiro</span>.
+      Cada etapa é um
+      <span class="underline decoration-brand-yellow decoration-4 underline-offset-4">prazo</span>,
+      um <span class="underline decoration-brand-yellow decoration-4 underline-offset-4">frete</span>
+      e um <span class="underline decoration-brand-yellow decoration-4 underline-offset-4">risco de atraso</span>.
+      Na Astec, a peça entra como projeto e sai pronta para montagem.
+    </p>
+
+    <div class="mt-12 reveal delay-200">
+      <a href="#contato"
+         class="inline-flex items-center gap-2 bg-brand-yellow text-brand-dark px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-yellow-400 transition-colors">
+        Resolver isso agora
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     5. CAPACIDADE TÉCNICA — seção ESCURA
+══════════════════════════════════════════════════ -->
+<section id="servicos" class="bg-brand-dark pt-24 pb-24 relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid-dark pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative">
+    <!-- Header -->
+    <div class="max-w-2xl mb-16">
+      <div class="flex items-center gap-3 mb-5 reveal">
+        <span class="w-8 h-px bg-brand-yellow"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand-yellow">O que fazemos</span>
+      </div>
+      <h2 id="capacidade" class="font-space-grotesk text-white text-4xl font-bold tracking-tight mb-4 reveal delay-100">Capacidade Técnica</h2>
+      <p class="text-gray-400 text-lg leading-relaxed reveal delay-200">Do corte ao acabamento, tudo sob o mesmo teto. Sem terceiros, sem retrabalho.</p>
+    </div>
+
+    <!-- Cards grid 2×2 -->
+    <div class="grid sm:grid-cols-2 gap-6">
+
+      <!-- Corte -->
+      <div class="bg-brand-card border border-gray-800 rounded-2xl p-8 hover:border-brand-blue/50 transition-colors reveal delay-100">
+        <div class="w-12 h-12 bg-brand-blue/15 rounded-xl flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#355CA1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+        </div>
+        <h3 class="text-brand-blue text-lg font-bold mb-3">Corte</h3>
+        <p class="text-gray-400 leading-relaxed">Oxicorte, plasma e serra de fita. Aço carbono e inox até 25mm (1 polegada).</p>
+      </div>
+
+      <!-- Dobra -->
+      <div class="bg-brand-card border border-gray-800 rounded-2xl p-8 hover:border-brand-blue/50 transition-colors reveal delay-200">
+        <div class="w-12 h-12 bg-brand-blue/15 rounded-xl flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#355CA1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12 L12 3 L21 12"/><path d="M5 10 L5 20 Q5 21 6 21 L18 21 Q19 21 19 20 L19 10"/></svg>
+        </div>
+        <h3 class="text-brand-blue text-lg font-bold mb-3">Dobra</h3>
+        <p class="text-gray-400 leading-relaxed">Prensa dobradeira CNC — ângulos precisos para peças de caldeiraria leve e média, com rastreabilidade do aço.</p>
+      </div>
+
+      <!-- Solda e Caldeiraria -->
+      <div class="bg-brand-card border border-gray-800 rounded-2xl p-8 hover:border-brand-blue/50 transition-colors reveal delay-300">
+        <div class="w-12 h-12 bg-brand-blue/15 rounded-xl flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#355CA1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="text-brand-blue text-lg font-bold mb-3">Solda e Caldeiraria</h3>
+        <p class="text-gray-400 leading-relaxed">Fabricação e montagem completa de estruturas metálicas. Do componente isolado ao conjunto finalizado.</p>
+      </div>
+
+      <!-- Acabamento Premium -->
+      <div class="bg-brand-card border border-gray-800 rounded-2xl p-8 hover:border-brand-blue/50 transition-colors reveal delay-400">
+        <div class="w-12 h-12 bg-brand-blue/15 rounded-xl flex items-center justify-center mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#355CA1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        </div>
+        <h3 class="text-brand-blue text-lg font-bold mb-3">Acabamento Premium</h3>
+        <p class="text-gray-400 leading-relaxed">Pintura eletrostática e galvanização (prata ou amarela) — sua peça sai pronta para uso, sem etapas externas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     6. POR QUE A ASTEC — seção BRANCA
+══════════════════════════════════════════════════ -->
+<section id="sobre" class="bg-white pt-24 pb-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <div class="flex items-center justify-center gap-3 mb-5 reveal">
+        <span class="w-8 h-px bg-brand-yellow"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-gray-400">Por que a Astec</span>
+        <span class="w-8 h-px bg-brand-yellow"></span>
+      </div>
+      <h2 class="font-space-grotesk text-brand-dark text-4xl font-bold tracking-tight reveal delay-100">Dois motivos que importam</h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- Card A -->
+      <div class="bg-gray-50 rounded-2xl border border-gray-100 p-10 hover:border-brand-yellow/40 transition-colors relative overflow-hidden reveal delay-100">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-brand-yellow rounded-t-2xl"></div>
+        <div class="w-12 h-12 bg-brand-dark rounded-xl flex items-center justify-center mb-6">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="font-space-grotesk text-brand-dark text-xl font-bold mb-4 leading-snug">Um fornecedor. Uma entrega. Peça pronta.</h3>
+        <p class="text-gray-600 leading-relaxed">Da chapa crua ao acabamento final, tudo sob o mesmo teto. Sem intermediários, sem etapas externas.</p>
+      </div>
+
+      <!-- Card B -->
+      <div class="bg-gray-50 rounded-2xl border border-gray-100 p-10 hover:border-brand-blue/30 transition-colors relative overflow-hidden reveal delay-200">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-brand-blue rounded-t-2xl"></div>
+        <div class="w-12 h-12 bg-brand-dark rounded-xl flex items-center justify-center mb-6">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#355CA1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3 class="font-space-grotesk text-brand-dark text-xl font-bold mb-4 leading-snug">30 anos de indústria pesada</h3>
+        <p class="text-gray-600 leading-relaxed">A Astec nasceu fabricando e mantendo pontes rolantes e talhas elétricas. Rigor técnico não é diferencial para nós — é obrigação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     7. PROVA VISUAL — seção ESCURA
+══════════════════════════════════════════════════ -->
+<section class="bg-brand-dark pt-24 pb-24 relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid-dark pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative">
+    <div class="text-center mb-16">
+      <div class="flex items-center justify-center gap-3 mb-5 reveal">
+        <span class="w-8 h-px bg-brand-yellow"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-brand-yellow">Nossa estrutura</span>
+        <span class="w-8 h-px bg-brand-yellow"></span>
+      </div>
+      <h2 class="font-space-grotesk text-white text-4xl font-bold tracking-tight reveal delay-100">Veja a operação</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+      <!-- TODO: substituir por foto real do maquinário -->
+      <div class="reveal delay-100 rounded-2xl overflow-hidden aspect-[4/3] bg-brand-card border border-gray-800 flex flex-col items-center justify-center gap-3 relative">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <p class="text-xs text-gray-600 italic text-center px-6">Nossa prensa dobradeira CNC em operação</p>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-white/5 backdrop-blur-sm flex justify-between items-center">
+          <span class="text-white text-xs font-medium">Prensa CNC</span>
+          <span class="text-gray-500 text-xs">foto a inserir</span>
+        </div>
+      </div>
+
+      <!-- TODO: substituir por foto da equipe com nome e cargo -->
+      <div class="reveal delay-200 rounded-2xl overflow-hidden aspect-[4/3] bg-brand-card border border-gray-800 flex flex-col items-center justify-center gap-3 relative">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p class="text-xs text-gray-600 italic text-center px-6">Foto da equipe técnica — nome e cargo</p>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-white/5 backdrop-blur-sm flex justify-between items-center">
+          <span class="text-white text-xs font-medium">Nossa equipe</span>
+          <span class="text-gray-500 text-xs">foto a inserir</span>
+        </div>
+      </div>
+
+      <!-- TODO: substituir por embed de vídeo (30s) mostrando ciclo completo: corte → acabamento -->
+      <div class="reveal delay-300 rounded-2xl overflow-hidden aspect-[4/3] bg-brand-card border border-gray-800 flex flex-col items-center justify-center gap-3 relative">
+        <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <p class="text-xs text-gray-600 italic text-center px-6">Vídeo: ciclo corte → acabamento (30s)</p>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-white/5 backdrop-blur-sm flex justify-between items-center">
+          <span class="text-white text-xs font-medium">Processo completo</span>
+          <span class="text-gray-500 text-xs">vídeo a inserir</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     8. FAQ — seção BRANCA
+══════════════════════════════════════════════════ -->
+<section class="bg-white pt-24 pb-24">
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+
+    <!-- Left copy -->
+    <div class="reveal">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-8 h-px bg-brand-yellow"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-gray-400">Dúvidas frequentes</span>
+      </div>
+      <h2 class="font-space-grotesk text-brand-dark text-4xl font-bold tracking-tight mb-6 leading-tight">FAQ Técnico</h2>
+      <p class="text-gray-600 leading-relaxed mb-8">Respondemos as dúvidas mais comuns de engenheiros e compradores técnicos. Não encontrou o que precisava?</p>
+      <a href="https://wa.me/555130513302" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 border border-gray-200 text-brand-dark px-6 py-3 rounded-full text-sm font-semibold hover:border-brand-dark transition-colors"
+         aria-label="Perguntar no WhatsApp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-green-500" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.95-1.418A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 0 1-4.073-1.115l-.292-.173-3.02.865.865-3.02-.173-.292A8 8 0 1 1 12 20z"/></svg>
+        Perguntar no WhatsApp
+      </a>
+    </div>
+
+    <!-- Accordion -->
+    <div class="space-y-3 reveal delay-200">
+
+      <div class="bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition-colors overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left text-brand-dark font-semibold text-base"
+                aria-expanded="false" aria-controls="faq1">
+          Vocês trabalham com inox?
+          <svg class="faq-chevron flex-shrink-0 transition-transform duration-300 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" id="faq1">
+          <p class="px-5 pb-5 text-gray-600 leading-relaxed">Sim. Trabalhamos com aço carbono e inox, com disponibilidade conforme pedido.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition-colors overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left text-brand-dark font-semibold text-base"
+                aria-expanded="false" aria-controls="faq2">
+          Qual a espessura máxima que vocês cortam?
+          <svg class="faq-chevron flex-shrink-0 transition-transform duration-300 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" id="faq2">
+          <p class="px-5 pb-5 text-gray-600 leading-relaxed">Até 25mm com plasma e oxicorte — o range ideal para caldeiraria leve e média.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition-colors overflow-hidden">
+        <button class="faq-btn w-full flex items-center justify-between gap-4 p-5 text-left text-brand-dark font-semibold text-base"
+                aria-expanded="false" aria-controls="faq3">
+          Qual o prazo para receber o orçamento?
+          <svg class="faq-chevron flex-shrink-0 transition-transform duration-300 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" id="faq3">
+          <p class="px-5 pb-5 text-gray-600 leading-relaxed">Em até 24 horas após o envio do projeto. Para projetos simples, retornamos no mesmo dia.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     9. CTA FINAL — seção AZUL
+══════════════════════════════════════════════════ -->
+<section id="contato" class="bg-brand-blue relative overflow-hidden pt-24 pb-24">
+  <div class="absolute inset-0 bg-grid-dark pointer-events-none opacity-40"></div>
+
+  <div class="max-w-3xl mx-auto px-6 relative text-center reveal">
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <span class="w-8 h-px bg-brand-yellow"></span>
+      <span class="text-xs font-semibold tracking-widest uppercase text-white/60">Vamos começar</span>
+      <span class="w-8 h-px bg-brand-yellow"></span>
+    </div>
+    <h2 class="font-space-grotesk text-white text-4xl sm:text-5xl font-bold tracking-tight mb-6 leading-tight">
+      Solicite seu orçamento agora
+    </h2>
+    <p class="text-white/70 text-lg leading-relaxed mb-12 max-w-xl mx-auto">
+      Nossa equipe retorna em até 24 horas com o orçamento completo para a sua peça.
+    </p>
+    <a href="https://wa.me/555130513302" target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-full text-base font-semibold hover:bg-[#1db954] transition-colors shadow-lg shadow-black/20"
+       aria-label="Falar no WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.95-1.418A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 0 1-4.073-1.115l-.292-.173-3.02.865.865-3.02-.173-.292A8 8 0 1 1 12 20z"/></svg>
+      Falar no WhatsApp · (51) 3051-3302
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     10. RODAPÉ — seção ESCURA
+══════════════════════════════════════════════════ -->
+<footer class="bg-brand-dark border-t border-gray-800 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-3 gap-10 mb-14">
+      <!-- Brand -->
+      <div>
+        <img src="logomarca/logo_Astec.png" alt="Astec" height="36" class="h-9 w-auto mb-5" loading="lazy" />
+        <p class="text-gray-500 text-sm leading-relaxed max-w-xs">
+          Astec — divisão de corte, dobra e acabamento metálico.<br />
+          Parte do grupo Astec, referência em pontes rolantes e talhas elétricas há 30 anos na indústria brasileira.
+        </p>
+        <!-- Social placeholders -->
+        <!-- TODO: preencher links de redes sociais -->
+        <div class="flex gap-3 mt-5" aria-label="Redes sociais">
+          <a href="#" aria-label="Instagram da Astec"
+             class="w-9 h-9 rounded-lg bg-brand-card border border-gray-800 flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-600 transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn da Astec"
+             class="w-9 h-9 rounded-lg bg-brand-card border border-gray-800 flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-600 transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <div>
+        <p class="text-xs font-bold tracking-widest uppercase text-gray-600 mb-5">Navegação</p>
+        <ul class="space-y-3" role="list">
+          <li><a href="#servicos"   class="text-gray-500 text-sm hover:text-white transition-colors">Serviços</a></li>
+          <li><a href="#capacidade" class="text-gray-500 text-sm hover:text-white transition-colors">Capacidade Técnica</a></li>
+          <li><a href="#sobre"      class="text-gray-500 text-sm hover:text-white transition-colors">Sobre a Astec</a></li>
+          <li><a href="#faq"        class="text-gray-500 text-sm hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="#contato"    class="text-gray-500 text-sm hover:text-white transition-colors">Contato</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <p class="text-xs font-bold tracking-widest uppercase text-gray-600 mb-5">Contato</p>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5 flex-shrink-0 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="text-gray-500 text-sm leading-relaxed">R. Dom Pedro II, 1502 — Niterói, Canoas - RS<br />92110-464, Brasil</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 flex-shrink-0 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+555130513302" class="text-gray-500 text-sm hover:text-white transition-colors">(51) 3051-3302</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4 flex-shrink-0 text-green-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.95-1.418A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 0 1-4.073-1.115l-.292-.173-3.02.865.865-3.02-.173-.292A8 8 0 1 1 12 20z"/></svg>
+            <a href="https://wa.me/555130513302" target="_blank" rel="noopener noreferrer" class="text-gray-500 text-sm hover:text-white transition-colors">(51) 3051-3302 · WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-700">
+      <span>© 2024 Astec. Todos os direitos reservados.</span>
+      <span>Astec — divisão de corte, dobra e acabamento metálico · Canoas/RS</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ── WhatsApp Floating Button ── -->
+<a href="https://wa.me/555130513302" target="_blank" rel="noopener noreferrer"
+   class="fixed bottom-7 right-7 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg shadow-green-900/40 hover:scale-110 transition-transform"
+   aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.95-1.418A9.955 9.955 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 0 1-4.073-1.115l-.292-.173-3.02.865.865-3.02-.173-.292A8 8 0 1 1 12 20z"/></svg>
+</a>
+
+
+<!-- ── JAVASCRIPT ── -->
+<script>
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    const lines = hamburger.querySelectorAll('.hamburger-line');
+    if (open) {
+      lines[0].style.transform = 'translateY(7px) rotate(45deg)';
+      lines[1].style.opacity = '0';
+      lines[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    } else {
+      lines[0].style.transform = '';
+      lines[1].style.opacity = '';
+      lines[2].style.transform = '';
+    }
+  });
+
+  document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+    const lines = hamburger.querySelectorAll('.hamburger-line');
+    lines[0].style.transform = '';
+    lines[1].style.opacity = '';
+    lines[2].style.transform = '';
+  }));
+
+  /* ── FAQ Accordion ── */
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-btn').forEach(b => {
+        b.setAttribute('aria-expanded', false);
+        b.querySelector('.faq-chevron').style.transform = '';
+        b.nextElementSibling.style.maxHeight = null;
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', true);
+        btn.querySelector('.faq-chevron').style.transform = 'rotate(180deg)';
+        btn.nextElementSibling.style.maxHeight = btn.nextElementSibling.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .reveal-fade').forEach(el => revealObserver.observe(el));
+
+  /* Hero elements in view on load */
+  window.addEventListener('load', () => {
+    document.querySelectorAll('section:first-of-type .reveal, section:first-of-type .reveal-fade').forEach(el => {
+      el.classList.add('in-view');
+    });
+  });
+
+  /* ── Header shadow on scroll ── */
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('shadow-md', window.scrollY > 16);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
